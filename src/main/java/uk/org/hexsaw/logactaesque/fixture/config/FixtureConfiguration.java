@@ -11,10 +11,17 @@ import org.springframework.context.annotation.Configuration;
 import uk.org.hexsaw.logactaesque.fixture.model.Fixture;
 import uk.org.hexsaw.logactaesque.fixture.model.FixtureSchedule;
 import uk.org.hexsaw.logactaesque.fixture.model.Fixtures;
+import uk.org.hexsaw.logactaesque.fixture.service.FixtureService;
+import uk.org.hexsaw.logactaesque.fixture.service.impl.HttpClientFixtureService;
 
 @Configuration
 @EnableAutoConfiguration
 public class FixtureConfiguration {
+    
+    @Bean 
+    public FixtureService fixtureService() {
+        return new HttpClientFixtureService();
+    }
     
     @Bean
     public Fixtures round1Fixtures() {

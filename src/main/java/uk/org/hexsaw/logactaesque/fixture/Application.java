@@ -10,8 +10,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import uk.org.hexsaw.logactaesque.fixture.model.Fixture;
+import uk.org.hexsaw.logactaesque.fixture.model.FixtureResult;
 import uk.org.hexsaw.logactaesque.fixture.model.FixtureSchedule;
 import uk.org.hexsaw.logactaesque.fixture.model.Fixtures;
+import uk.org.hexsaw.logactaesque.fixture.service.FixtureService;
 
 @Configuration
 @ComponentScan
@@ -21,6 +23,9 @@ public class Application
 
     @Autowired
     private FixtureSchedule fixtureSchedule;
+    
+    @Autowired
+    private FixtureService fixtureService;
 
     private static final Logger logger = LoggerFactory.getLogger(FixtureSchedule.class);
 
@@ -36,7 +41,8 @@ public class Application
         while (roundNo <= roundCount) {
             Fixtures fixtures = fixtureSchedule.getFixturesByRound(roundNo);
             for (Fixture fixture : fixtures.getFixtureList()) {
-                logger.info(fixture.toString());
+                FixtureResult fixtureResult = fixtureService.play(fixture);
+                logger.info(fixtureResult.toString());
             }
             roundNo++;
         }
