@@ -18,8 +18,7 @@ import uk.org.hexsaw.logactaesque.fixture.service.FixtureService;
 @Configuration
 @ComponentScan
 @EnableAutoConfiguration
-public class Application
-    implements CommandLineRunner {
+public class Application implements CommandLineRunner {
 
     @Autowired
     private FixtureSchedule fixtureSchedule;

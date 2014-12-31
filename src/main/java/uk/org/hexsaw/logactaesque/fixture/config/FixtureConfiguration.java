@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Configuration;
 import uk.org.hexsaw.logactaesque.fixture.model.Fixture;
 import uk.org.hexsaw.logactaesque.fixture.model.FixtureSchedule;
 import uk.org.hexsaw.logactaesque.fixture.model.Fixtures;
+import uk.org.hexsaw.logactaesque.fixture.resolver.SimpleTeamResolver;
+import uk.org.hexsaw.logactaesque.fixture.resolver.TeamResolver;
 import uk.org.hexsaw.logactaesque.fixture.service.FixtureService;
 import uk.org.hexsaw.logactaesque.fixture.service.impl.HttpClientFixtureService;
 
@@ -21,6 +23,10 @@ public class FixtureConfiguration {
     @Bean 
     public FixtureService fixtureService() {
         return new HttpClientFixtureService();
+    }
+    
+    @Bean TeamResolver teamResolver() {
+        return new SimpleTeamResolver();
     }
     
     @Bean
