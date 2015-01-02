@@ -7,7 +7,9 @@ import java.util.Map;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
+import uk.org.hexsaw.logactaesque.fixture.adapter.FixtureGameAdapter;
 import uk.org.hexsaw.logactaesque.fixture.model.Fixture;
 import uk.org.hexsaw.logactaesque.fixture.model.FixtureSchedule;
 import uk.org.hexsaw.logactaesque.fixture.model.Fixtures;
@@ -21,12 +23,18 @@ import uk.org.hexsaw.logactaesque.fixture.service.impl.HttpClientFixtureService;
 public class FixtureConfiguration {
     
     @Bean 
-    public FixtureService fixtureService() {
-        return new HttpClientFixtureService();
+    public TeamResolver teamResolver() {
+        return new SimpleTeamResolver();
     }
     
-    @Bean TeamResolver teamResolver() {
-        return new SimpleTeamResolver();
+    @Bean
+    public FixtureGameAdapter fixtureGameAdapter() {
+        return new FixtureGameAdapter();
+    }
+    
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
     
     @Bean
@@ -48,5 +56,11 @@ public class FixtureConfiguration {
         Map<Integer, Fixtures> fixtureMap = new HashMap<>();
         fixtureMap.put(1, round1Fixtures());
         fixtureMap.put(2, round2Fixtures());
-        return new FixtureSchedule(fixtureMap);    }
+        return new FixtureSchedule(fixtureMap);    
+    }
+    
+    @Bean
+    public FixtureService fixtureService() {
+        return new HttpClientFixtureService();
+    }
 }
