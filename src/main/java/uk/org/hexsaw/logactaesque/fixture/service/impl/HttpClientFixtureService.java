@@ -24,9 +24,9 @@ public class HttpClientFixtureService implements FixtureService {
 
     public FixtureResult play(Fixture fixture) {
         Game game = adapter.to(fixture);
-        log.info("About to play " + fixture.toString());
         GameResult gameResult = template.postForObject("https://logactaesque-game.cfapps.io/game/play", game, GameResult.class);
-        return new FixtureResult(fixture);
+        log.info(gameResult.toString());
+        return new FixtureResult(fixture, gameResult.getHomeGoals(), gameResult.getAwayGoals());
     }
 
     public void setTemplate(RestTemplate template) {
