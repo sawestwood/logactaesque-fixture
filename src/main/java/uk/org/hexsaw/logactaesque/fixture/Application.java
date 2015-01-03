@@ -41,6 +41,7 @@ public class Application implements CommandLineRunner {
             Fixtures fixtures = fixtureSchedule.getFixturesByRound(roundNo);
             for (Fixture fixture : fixtures.getFixtureList()) {
                 FixtureResult fixtureResult = fixtureService.play(fixture);
+                logger.info(fixtureResult.toString());
             }
             roundNo++;
         }
