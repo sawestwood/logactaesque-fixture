@@ -52,12 +52,14 @@ public class Application implements CommandLineRunner {
             	@SuppressWarnings("unused")
 				Future<FixtureResult> future = executorService.submit(() -> {
 					FixtureResult fixtureResult = fixtureService.play(fixture);
+					logger.info(fixtureResult.toString());
 				    return fixtureResult;
 				});
             	
+            	
             }
             roundNo++;
-            executorService.shutdownNow();
+            executorService.shutdown();
         }
     }
 }

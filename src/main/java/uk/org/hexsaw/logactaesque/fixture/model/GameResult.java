@@ -8,8 +8,9 @@ public class GameResult {
     private int homeGoals;
     private int awayGoals;
     
-    public GameResult() {
-        
+    private GameStatus gameStatus = GameStatus.SCHEDULED;
+    
+    public GameResult() {     
     }
 
     public GameResult(String homeTeam, int homeGoals, String awayTeam, int awayGoals) {
@@ -17,9 +18,14 @@ public class GameResult {
         this.homeGoals = homeGoals;
         this.awayTeam = awayTeam;
         this.awayGoals = awayGoals;
+        this.gameStatus = GameStatus.PLAYED;
     }
 
-    public String getHomeTeam() {
+    public GameResult(GameStatus gameStatus) {
+		this.gameStatus = gameStatus;
+	}
+
+	public String getHomeTeam() {
         return homeTeam;
     }
 
@@ -51,8 +57,16 @@ public class GameResult {
         this.awayGoals = awayGoals;
     }
     
-    public String toString() {
-        return "GameResult [" + homeTeam + " " + Integer.toString(homeGoals)  + "-"  + Integer.toString(awayGoals) + " " + awayTeam + "]";
+    public GameStatus getGameStatus() {
+		return gameStatus;
+	}
+
+	public void setGameStatus(GameStatus gameStatus) {
+		this.gameStatus = gameStatus;
+	}
+
+	public String toString() {
+        return "GameResult [GameStatus = " + gameStatus + " "  + homeTeam + " " + Integer.toString(homeGoals)  + "-"  + Integer.toString(awayGoals) + " " + awayTeam + "]";
     }
 
 }
