@@ -19,9 +19,9 @@ public class FixtureResult {
     
     @Override
     public String toString() {
-        return "FixtureResult [ TeamCode " + this.fixture.getHomeCode() + " " + 
+        return "FixtureResult [ TeamCode-" + this.fixture.getHomeCode() + " " + 
                         String.valueOf(this.homeGoals) + " vs " + 
-                        String.valueOf(this.awayGoals) + " TeamCode "  + this.fixture.getAwayCode() + "]";
+                        String.valueOf(this.awayGoals) + " TeamCode-"  + this.fixture.getAwayCode() + "]";
     }
 
     

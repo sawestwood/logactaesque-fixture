@@ -1,5 +1,9 @@
 package uk.org.hexsaw.logactaesque.fixture;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,17 +38,26 @@ public class Application implements CommandLineRunner {
 
     @Override
     public void run(String... arg0) throws Exception {
+    	ExecutorService executorService;
         int roundNo = 1;
         int roundCount = fixtureSchedule.getNumberOfRounds();
 
         while (roundNo <= roundCount) {
+        	
             Fixtures fixtures = fixtureSchedule.getFixturesByRound(roundNo);
-            for (Fixture fixture : fixtures.getFixtureList()) {
-                FixtureResult fixtureResult = fixtureService.play(fixture);
-                logger.info(fixtureResult.toString());
+            
+            executorService = Executors.newFixedThreadPool(fixtures.getFixtureList().size());
+            
+            for (Fixture fixture : fixtures.getFixtureList()) {           	
+            	@SuppressWarnings("unused")
+				Future<FixtureResult> future = executorService.submit(() -> {
+					FixtureResult fixtureResult = fixtureService.play(fixture);
+				    return fixtureResult;
+				});
+            	
             }
             roundNo++;
+            executorService.shutdownNow();
         }
-
     }
 }

@@ -7,7 +7,6 @@ public class Team {
     private String name;
     
     public Team(int code, String name) {
-        super();
         this.code = code;
         this.name = name;
     }
