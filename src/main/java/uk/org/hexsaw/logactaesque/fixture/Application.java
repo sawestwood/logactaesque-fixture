@@ -13,6 +13,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import uk.org.hexsaw.logactaesque.fixture.callable.PlayFixtureCallable;
 import uk.org.hexsaw.logactaesque.fixture.model.Fixture;
 import uk.org.hexsaw.logactaesque.fixture.model.FixtureResult;
 import uk.org.hexsaw.logactaesque.fixture.model.FixtureSchedule;
@@ -49,14 +50,16 @@ public class Application implements CommandLineRunner {
             executorService = Executors.newFixedThreadPool(fixtures.getFixtureList().size());
             
             for (Fixture fixture : fixtures.getFixtureList()) {           	
-            	@SuppressWarnings("unused")
-				Future<FixtureResult> future = executorService.submit(() -> {
-					FixtureResult fixtureResult = fixtureService.play(fixture);
-					logger.info(fixtureResult.toString());
-				    return fixtureResult;
-				});
-            	
-            	
+				Future<FixtureResult> future = executorService.submit(new PlayFixtureCallable(fixtureService, fixture));
+				logger.info(future.get().toString());
+//						
+//						
+//						() -> {
+//					FixtureResult fixtureResult = fixtureService.play(fixture);
+//					logger.info(fixtureResult.toString());
+//				    return fixtureResult;
+//				});
+
             }
             roundNo++;
             executorService.shutdown();

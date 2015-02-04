@@ -37,6 +37,42 @@ public class FixtureResult {
     public GameStatus getGameStatus() {
 		return gameStatus;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 1499;
+		int result = 1;
+		result = prime * result + awayGoals;
+		result = prime * result + ((fixture == null) ? 0 : fixture.hashCode());
+		result = prime * result + ((gameStatus == null) ? 0 : gameStatus.hashCode());
+		result = prime * result + homeGoals;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		FixtureResult other = (FixtureResult) obj;
+		if (awayGoals != other.awayGoals)
+			return false;
+		if (fixture == null) {
+			if (other.fixture != null)
+				return false;
+		} else if (!fixture.equals(other.fixture))
+			return false;
+		if (gameStatus != other.gameStatus)
+			return false;
+		if (homeGoals != other.homeGoals)
+			return false;
+		return true;
+	}
+    
+    
     
     
 
